@@ -1,0 +1,76 @@
+﻿@page
+@model SignalRAssignment.Pages.ProductPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Products</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Products.ProductName" class="control-label"></label>
+                <input asp-for="Products.ProductName" class="form-control" required/>
+                <span asp-validation-for="Products.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.SupplierId" class="control-label"></label>
+                <select asp-for="Products.SupplierId" class="form-control">
+                    @foreach(var item in Model.listSup)
+                    {
+                        <option value="@item.SupplierId">@item.CompanyName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.CategoryId" class="control-label"></label>
+                <select asp-for="Products.CategoryId" class ="form-control">
+                    @foreach(var item in Model.listCat)
+                    {
+                        <option value="@item.CategoryId">@item.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.QuantityPerUnit" class="control-label"></label>
+                <input asp-for="Products.QuantityPerUnit" required class="form-control" />
+                <span asp-validation-for="Products.QuantityPerUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.UnitPrice" class="control-label"></label>
+                <input asp-for="Products.UnitPrice" required class="form-control" />
+                <span asp-validation-for="Products.UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.ProductImage" class="control-label"></label>
+                <input id="img" asp-for="Products.ProductImage" required class="form-control" />
+                <span asp-validation-for="Products.ProductImage" class="text-danger"></span>
+
+                <button type="button" onclick="readURL()">Load</button>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/ProductPage/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    function readURL() {cha
+        var url = document.getElementById("upload").value;
+        document.getElementById("img").src = url;
+    }
+</script>

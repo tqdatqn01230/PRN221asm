@@ -1,0 +1,96 @@
+﻿@page
+@using Microsoft.AspNetCore.Http
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h2>Pizza menu</h2>
+
+<div class="text-center">
+    <h1 class="display-4">
+        Welcome
+        @if (Model.acc != null)
+        {
+            @Model.acc.FullName
+        }
+        else if (Model.cust != null)
+        {
+            @Model.cust.ContactName
+        }
+    </h1>
+</div>
+
+@if (Model.acc != null && Model.acc.Type == 1)
+{
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <a asp-page="/ProductPage/Create" class="btn btn-primary">Create new pizza</a>
+        </div>
+    </div>
+}
+<form method="get" asp-page="Index">
+    Category:
+    <select asp-for="catSearch" name="catSearch">
+        <option value="">All</option>
+        @foreach (var item in Model.listCat)
+        {
+            <option value="@item.CategoryId">@item.CategoryName</option>
+        }
+    </select>
+    search: <input name="searchName" type="text" value="@Model.searchName" />
+    <button class="btn btn-outline-primary">Search</button>
+</form>
+
+<div class="mt-4">
+    @if (Model.acc != null && Model.acc.Type == 1)
+    {
+        <div class="d-flex flex-row mb-3">
+            <div class="p-2">
+                <a class="btn btn-outline-info" asp-page="/CategoryPage/Index">Category</a>
+            </div>
+            <div class="p-2">
+                <a class="btn btn-outline-info" asp-page="/SupPage/Index">Supply</a>
+            </div>
+            <div class="p-2">
+                <a class="btn btn-outline-info" asp-page="/OrderPage/Index">Order</a>
+            </div>
+            <div class="p-2">
+                <a class="btn btn-outline-info" asp-page="/AccountCon/Index">Staff</a>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row">
+    @foreach (var item in Model.Products)
+    {
+        <div class="col-3">
+            <div class="card mb-3" style="width: 18rem;">
+                <a asp-page="ProductPage/Details" asp-route-id="@item.ProductId">
+                    <img src="@item.ProductImage" class="card-img-top" alt="...">
+                </a>
+                <div class="card-body">
+                    <a asp-page="ProductPage/Details" asp-route-id="@item.ProductId"> <h5 class="card-title">@item.ProductName</h5></a>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                    <p>$ @item.UnitPrice</p>
+                    <p class="fw-bold">Category: @item.Category.CategoryName </p>
+
+                    @if (Model.acc != null)
+                    {
+                        <a href="/ProductPage/Create" class="btn btn-primary">Add pizza</a>
+                        <a asp-page="/ProductPage/Edit" asp-route-id="@item.ProductId" class="btn btn-info">Update pizza</a>
+                        <a asp-page="/ProductPage/Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Delete pizza</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4"></div>
+
+<div class="text-center">
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

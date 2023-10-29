@@ -1,0 +1,83 @@
+﻿@page
+@model SignalRAssignment.Pages.ProductPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Products</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Products.ProductId" />
+            <div class="form-group">
+                <label asp-for="Products.ProductName" class="control-label"></label>
+                <input asp-for="Products.ProductName" class="form-control" />
+                <span asp-validation-for="Products.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.SupplierId" class="control-label"></label>
+                <select asp-for="Products.SupplierId" class="form-control">
+                    @foreach (var item in Model.listSup)
+                    {
+                        <option value="@item.SupplierId">@item.CompanyName</option>
+                    }
+                </select>
+                <span asp-validation-for="Products.SupplierId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.CategoryId" class="control-label"></label>
+                <select asp-for="Products.CategoryId" class="form-control">
+                    @foreach (var item in Model.listCat)
+                    {
+                        <option value="@item.CategoryId">@item.CategoryName</option>
+                    }
+                </select>
+                <span asp-validation-for="Products.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.QuantityPerUnit" class="control-label"></label>
+                <input asp-for="Products.QuantityPerUnit" class="form-control" />
+                <span asp-validation-for="Products.QuantityPerUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Products.UnitPrice" class="control-label"></label>
+                <input asp-for="Products.UnitPrice" class="form-control" />
+                <span asp-validation-for="Products.UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="Products.productImage" class="control-label"></label>
+                <input asp-for="Products.productImage" class="form-control" />
+                <span asp-validation-for="Products.productImage" class="text-danger"></span>*@
+                Image
+                <input type='text' asp-for="Products.ProductImage"
+                       class="form-control"
+                       value="@Model.Products.ProductImage"
+                       id="upload" onchange="readURL(this)" />
+                <button type="button" onclick="readURL()">test load</button>
+                <img class="img-fluid" id="img"
+                     src="@Model.Products.ProductImage"
+                      alt="your image" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<a asp-page="/ProductPage/Index">Back to List</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}<script>
+     function readURL() {
+         var url = document.getElementById("upload").value;
+         document.getElementById("img").src = url;
+     }
+</script>

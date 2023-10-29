@@ -1,0 +1,103 @@
+﻿@page
+@model SignalRAssignment.Pages.OrderPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Orders</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders.CustomerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orders.CustomerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders.OrderDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orders.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders.RequiredDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orders.RequiredDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders.ShippedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orders.ShippedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders.Freight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orders.Freight)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders.ShipAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orders.ShipAddress)
+        </dd>
+    </dl>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    Supplier
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Unit Price
+                </th>
+                <th>
+                    Buy Quantity
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.orderDetails.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.orderDetails[i].Product.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.orderDetails[i].Product.Supplier.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.orderDetails[i].Product.Category.CategoryName)
+                    </td>
+                    
+                    <td>
+
+                        @Html.DisplayFor(modelItem => Model.orderDetails[i].Product.UnitPrice)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => Model.orderDetails[i].Quantity)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Orders?.OrderId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,0 +1,122 @@
+﻿@page
+@model SignalRAssignment.Pages.OrderPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Orders</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Orders.CustomerId" class="control-label"></label>
+                @*<input asp-for="Orders.customerId" class="form-control" />*@
+                <select asp-for="Orders.CustomerId" class="form-control">
+                    @foreach (var item in Model.listCus)
+                    {
+                        <option value="@item.CustomerId">@item.ContactName</option>
+                    }
+                </select>
+                <span asp-validation-for="Orders.CustomerId" class="text-danger"></span>
+            </  >
+            <div class="form-group">
+                <label asp-for="Orders.OrderDate" class="control-label"></label>
+                <input asp-for="Orders.OrderDate" class="form-control" />
+                <span asp-validation-for="Orders.OrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders.RequiredDate" class="control-label"></label>
+                <input asp-for="Orders.RequiredDate" class="form-control" />
+                <span asp-validation-for="Orders.RequiredDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders.ShippedDate" class="control-label"></label>
+                <input asp-for="Orders.ShippedDate" class="form-control" />
+                <span asp-validation-for="Orders.ShippedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders.Freight" class="control-label"></label>
+                <input asp-for="Orders.Freight" class="form-control" />
+                <span asp-validation-for="Orders.Freight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders.ShipAddress" class="control-label"></label>
+                <input asp-for="Orders.ShipAddress" class="form-control" />
+                <span asp-validation-for="Orders.ShipAddress" class="text-danger"></span>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Supplier
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Unit Price
+                        </th>
+                        <th>
+                            Buy Quantity
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(int i=0; i< Model.products.Count; i++)
+                    {
+                        <tr>   
+                                <input asp-for="products[i].ProductId"  type ="hidden" class="form-control" readonly="true" />                           
+                            <td>
+                                    @Html.DisplayFor(modelItem => Model.products[i].ProductName)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => Model.products[i].Supplier)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => Model.products[i].Category)
+                            </td>
+                            <td>
+
+                                    @Html.DisplayFor(modelItem => Model.products[i].QuantityPerUnit)
+                            </td>
+                            <td>
+
+                                    @Html.DisplayFor(modelItem => Model.products[i].UnitPrice)
+                            </td>
+
+                            <td>
+                                    <input asp-for="products[i].BuyQuantity" type="number" class="form-control" min="0" max="@Model.products[i].QuantityPerUnit" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-page="/OrderPage/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
